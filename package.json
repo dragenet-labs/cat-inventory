@@ -8,7 +8,8 @@
     "my-inventory-backend"
   ],
   "scripts": {
-    "be": "yarn workspace my-inventory-backend"
+    "be": "yarn workspace my-inventory-backend",
+    "common": "yarn workspace my-inventory-common"
   },
   "author": "",
   "license": "ISC",

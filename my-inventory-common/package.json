@@ -1,0 +1,17 @@
+{
+  "name": "my-inventory-common",
+  "version": "0.1.0",
+  "description": "",
+  "main": "./dist/tsc/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc -p ../my-inventory-common/tsconfig.json",
+    "watch": "nodemon",
+    "build-all": "yarn clean && yarn build"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "zod": "^3.11.6"
+  }
+}
