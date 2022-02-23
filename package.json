@@ -1,0 +1,19 @@
+{
+  "name": "my-inventory",
+  "private": true,
+  "version": "0.1.0",
+  "description": "",
+  "workspaces": [
+    "my-inventory-common",
+    "my-inventory-backend"
+  ],
+  "scripts": {
+    "be": "yarn workspace my-inventory-backend"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "copy": "^0.3.2",
+    "rimraf": "^3.0.2"
+  }
+}
