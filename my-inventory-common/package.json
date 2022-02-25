@@ -2,7 +2,7 @@
   "name": "my-inventory-common",
   "version": "0.1.0",
   "description": "",
-  "main": "./dist/tsc/index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "test": "jest",
     "build": "tsc -p ../my-inventory-common/tsconfig.json",
@@ -13,5 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "zod": "^3.11.6"
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1"
   }
 }

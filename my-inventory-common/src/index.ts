@@ -1,1 +1,1 @@
-export type TestInterface = string;
+export * as utils from './utils';
