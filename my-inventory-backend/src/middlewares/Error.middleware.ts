@@ -1,9 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
-import { HttpError, HttpInternalServerError } from 'my-inventory-common/utils/Errors';
+import { HttpError, HttpInternalServerError, HttpNotFound } from 'my-inventory-common/utils/Errors';
+
+export const DefaultErrorMiddleware = (_req: Request, _res: Response, next: NextFunction) => {
+  next(new HttpNotFound());
+};
 
 export const ErrorMiddleware = (err: HttpError | Error, _req: Request, res: Response, next: NextFunction): void => {
-  console.error(err.stack);
+  console.error(err);
   const returnError = err instanceof HttpError ? err : new HttpInternalServerError();
-  res.status(returnError.statusCode).send(returnError.toJson());
+  res.status(returnError.statusCode).json(returnError.toJson());
   next();
 };

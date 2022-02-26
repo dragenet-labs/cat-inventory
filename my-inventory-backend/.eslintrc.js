@@ -1,11 +1,11 @@
 module.exports = {
-  root: true,
-  parser: '@typescript-eslint/parser',
-  plugins: [
-    '@typescript-eslint',
-  ],
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-  ],
+  extends: ['../.eslintrc.json'],
+  settings: {
+    'import/resolver': {
+      node: {
+        moduleDirectory: ['node_modules', './']
+      }
+    }
+  },
+  ignorePatterns: ['*.generated.ts', '__snapshots__/**']
 };

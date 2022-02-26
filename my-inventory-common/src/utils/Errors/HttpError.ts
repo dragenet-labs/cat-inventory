@@ -1,8 +1,10 @@
 import { ErrorTypes } from './ErrorTypes';
+import { ZodError } from 'zod';
 
 export interface HttpErrorDTO {
   type: ErrorTypes;
   message: string;
+  errors?: any[];
 }
 
 export class HttpError extends Error {
@@ -50,5 +52,18 @@ export class HttpNotFound extends HttpError {
 export class HttpInternalServerError extends HttpError {
   constructor(type?: ErrorTypes, message?: string) {
     super(type || ErrorTypes.HTTP_INTERNAL_SERVER_ERROR, message || 'Internal Server Error', 500);
+  }
+}
+
+export class HttpInvalidZodRequestError extends HttpError {
+  constructor(public zodError: ZodError) {
+    super(ErrorTypes.INVALID_ZOD_REQUEST, 'Request contains invalid data', 400);
+  }
+
+  toJson(): HttpErrorDTO {
+    return {
+      ...super.toJson(),
+      errors: this.zodError.errors
+    };
   }
 }

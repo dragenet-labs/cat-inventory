@@ -2,7 +2,15 @@ import express from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
-import { ErrorMiddleware } from 'src/middlewares';
+import { DefaultErrorMiddleware, ErrorMiddleware } from 'src/middlewares';
+import { PrismaClient } from '@prisma/client';
+import { HttpNotFound } from 'my-inventory-common/utils/Errors';
+import methodOverride from 'method-override';
+import { responseOf, zodSanitize, asyncHandler } from 'src/utils';
+import { z } from 'zod';
+
+const zodSchema = z.object({ email: z.string() });
+const prisma = new PrismaClient();
 
 dotenv.config();
 
@@ -12,6 +20,7 @@ const defaultMorganLogsFormat =
 
 const app = express();
 
+app.use(methodOverride());
 app.use(morgan(defaultMorganLogsFormat));
 app.use(
   bodyParser.urlencoded({
@@ -21,10 +30,22 @@ app.use(
 
 app.use(bodyParser.json());
 
-app.get('/', (_, res) => {
-  res.json({ message: 'Hello 2' });
+app.post(
+  '/',
+  asyncHandler(zodSanitize({ body: zodSchema }), async (_, req) => {
+    const res = await prisma.user.create({
+      data: {
+        email: req.body.email
+      }
+    });
+    return responseOf(res);
+  })
+);
+app.use((_req, _res, next) => {
+  next(new HttpNotFound());
 });
 
+app.use(DefaultErrorMiddleware);
 app.use(ErrorMiddleware);
 
 app.listen(PORT, () => {
