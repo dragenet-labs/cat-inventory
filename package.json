@@ -9,12 +9,12 @@
   ],
   "scripts": {
     "be": "yarn workspace my-inventory-backend",
-    "common": "yarn workspace my-inventory-common"
+    "common": "yarn workspace my-inventory-common",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "copy": "^0.3.2",
-    "rimraf": "^3.0.2"
+  "devDependencies": {
+    "husky": "^7.0.0"
   }
 }

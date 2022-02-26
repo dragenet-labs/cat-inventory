@@ -1,6 +1,12 @@
 {
-  "watch": ["src"],
-  "ext": "ts, json",
-  "ignore": ["src/**/*.spec.ts"],
-  "exec": "ts-node ./src"
+  "delay": "1500",
+  "watch": [
+    "src/*",
+    "../my-inventory-common/dist/*"
+  ],
+  "ext": "js, ts, json",
+  "ignore": [
+    "src/**/*.spec.ts"
+  ],
+  "exec": "yarn kill-port && yarn start:local"
 }
