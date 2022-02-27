@@ -4,7 +4,7 @@ import { ZodError } from 'zod';
 export interface HttpErrorDTO {
   type: ErrorTypes;
   message: string;
-  errors?: any[];
+  errors?: unknown[];
 }
 
 export class HttpError extends Error {
