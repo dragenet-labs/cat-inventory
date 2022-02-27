@@ -1,7 +1,7 @@
 import { z, ZodError } from 'zod';
 import { ZodRawShape } from 'zod/lib/types';
 import { Request, Response } from 'express';
-import { HttpInvalidZodRequestError } from 'my-inventory-common/utils/Errors';
+import { HttpError, HttpInvalidZodRequestError } from 'my-inventory-common/errors';
 
 export type ResponseFunction = (res: Response) => void;
 
@@ -14,7 +14,12 @@ export const responseOfBuffer =
   (res) =>
     res.status(status).type(type).send(data);
 
-export const zodSanitize = <S extends ZodRawShape>(schema: S) => {
+export interface ZodSanitizeOptions {
+  onError?: (error: ZodError) => unknown;
+  customError?: HttpError;
+}
+
+export const zodSanitize = <S extends ZodRawShape>(schema: S, options?: ZodSanitizeOptions) => {
   return (_data: unknown, req: Request) => {
     try {
       return z.object(schema).parse({
@@ -26,6 +31,13 @@ export const zodSanitize = <S extends ZodRawShape>(schema: S) => {
       });
     } catch (error) {
       if (error instanceof ZodError) {
+        if (options?.onError) {
+          options.onError(error);
+          throw options.customError;
+        }
+        if (options?.customError) {
+          throw options.customError;
+        }
         throw new HttpInvalidZodRequestError(error);
       } else {
         throw error;
@@ -34,4 +46,5 @@ export const zodSanitize = <S extends ZodRawShape>(schema: S) => {
   };
 };
 
-export const sanitizePlug = () => ({});
+export type TypedRequestBody<T> = { body: T };
+export type TypedRequestParams<T> = { params: T };

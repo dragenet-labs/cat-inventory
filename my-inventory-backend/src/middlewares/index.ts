@@ -1,1 +1,1 @@
-export * from './Error.middleware';
+export * from './error.middleware';

@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^3.10.0",
     "zod": "^3.11.6"
   },
   "devDependencies": {
