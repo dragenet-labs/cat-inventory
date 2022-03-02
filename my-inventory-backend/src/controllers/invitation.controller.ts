@@ -5,13 +5,13 @@ import {
   CreateInvitationCodeRequestDTO,
   zodInvitationCodeResponseDTO
 } from 'my-inventory-common/dto';
-import { ValidateInvitationRequestDTO } from 'my-inventory-common/dist/dto';
-import { services } from 'src/services';
 import {
-  HttpInvalidInvitationCode,
-  HttpExpiredInvitationCode,
-  HttpUsedInvitationCode
-} from 'my-inventory-common/errors';
+  BurnInvitationRequestDTO,
+  ValidateInvitationRequestDTO
+} from 'my-inventory-common/dist/dto';
+import { services } from 'src/services';
+import { HttpInvalidInvitationCode } from 'my-inventory-common/errors';
+import { checkIsInvitationValid } from 'src/services/invitationService';
 
 export async function createInvitation(data: TypedRequestBody<CreateInvitationCodeRequestDTO>) {
   const invitationCode = randomBytes(process.env.INVITATION_CODE_LENGTH / 2).toString('hex');
@@ -31,15 +31,23 @@ export async function validateInvitation(data: TypedRequestParams<ValidateInvita
   const invitation = await services.invitationService.getInvitationByCode(
     data.params.invitationCode
   );
+  if (invitation === null) return new HttpInvalidInvitationCode();
 
-  if (invitation === null) throw new HttpInvalidInvitationCode();
-  if (invitation.status === 'EXPIRED' || invitation.expiresAt < new Date()) {
-    if (invitation.status !== 'EXPIRED') {
-      await services.invitationService.updateInvitation(invitation, { status: 'EXPIRED' });
-    }
-    throw new HttpExpiredInvitationCode();
+  const invitationValidationError = await checkIsInvitationValid(invitation);
+  if (invitationValidationError !== null) {
+    throw invitationValidationError;
   }
-  if (invitation.status === 'USED') throw new HttpUsedInvitationCode();
-
   return responseOf(parseResponse(invitation, zodInvitationCodeResponseDTO));
+}
+
+export async function burnInvitation(data: TypedRequestBody<BurnInvitationRequestDTO>) {
+  const invitation = await services.invitationService.getInvitationByCode(data.body.invitationCode);
+  if (invitation === null) return new HttpInvalidInvitationCode();
+
+  const invitationValidationError = await checkIsInvitationValid(invitation);
+  if (invitationValidationError !== null) {
+    throw invitationValidationError;
+  }
+  await services.invitationService.burnInvitation(invitation);
+  return responseOf({});
 }

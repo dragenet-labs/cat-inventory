@@ -27,8 +27,8 @@ export class HttpExpiredInvitationCode extends HttpBadRequest {
   }
 }
 
-export class HttpUsedInvitationCode extends HttpBadRequest {
+export class HttpInactiveInvitationCode extends HttpBadRequest {
   constructor() {
-    super(ErrorTypes.USED_INVITATION_CODE, 'Your invitation code was used.');
+    super(ErrorTypes.INACTIVE_INVITATION_CODE, 'Your invitation code is inactive now.');
   }
 }

@@ -3,7 +3,7 @@ import { ZodRawShape } from 'zod/lib/types';
 import { Request, Response } from 'express';
 import { HttpError, HttpInvalidZodRequestError } from 'my-inventory-common/errors';
 
-export type ResponseFunction = (res: Response) => void;
+export type ResponseFunction = ((res: Response) => void) | HttpError;
 
 export function responseOf<T>(data: T, status = 200): ResponseFunction {
   return (res) => res.status(status).json(data);

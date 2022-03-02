@@ -24,3 +24,8 @@ export const zodValidateInvitationRequestDTO = z.object({
   invitationCode: zodInvitationCode
 });
 export type ValidateInvitationRequestDTO = z.infer<typeof zodValidateInvitationRequestDTO>;
+
+export const zodBurnInvitationRequestDTO = z.object({
+  invitationCode: zodInvitationCode
+});
+export type BurnInvitationRequestDTO = z.infer<typeof zodValidateInvitationRequestDTO>;

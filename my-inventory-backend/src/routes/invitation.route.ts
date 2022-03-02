@@ -8,6 +8,7 @@ import {
 import { HttpInvalidInvitationCode } from 'my-inventory-common/errors';
 import { zodWithParams } from 'src/utils/zod';
 import { ZodError } from 'zod';
+import { zodBurnInvitationRequestDTO } from 'my-inventory-common/dist/dto';
 
 export const invitationRoutes = Router();
 
@@ -35,5 +36,13 @@ invitationRoutes.post(
   asyncHandler(
     zodSanitize({ body: zodCreateInvitationCodeRequestDTO }),
     InvitationController.createInvitation
+  )
+);
+
+invitationRoutes.post(
+  '/burn',
+  asyncHandler(
+    zodSanitize({ body: zodBurnInvitationRequestDTO }),
+    InvitationController.burnInvitation
   )
 );
