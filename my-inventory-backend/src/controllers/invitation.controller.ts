@@ -16,10 +16,12 @@ import {
 export async function createInvitation(data: TypedRequestBody<CreateInvitationCodeRequestDTO>) {
   const invitationCode = randomBytes(process.env.INVITATION_CODE_LENGTH / 2).toString('hex');
   const expiresAt = moment().add(data.body.expiresIn, 'days').toDate();
+  const { volume } = data.body;
 
   const createdInvitationCode = await services.invitationService.createInvitation({
     invitationCode,
-    expiresAt
+    expiresAt,
+    volume
   });
 
   return responseOf(parseResponse(createdInvitationCode, zodInvitationCodeResponseDTO));

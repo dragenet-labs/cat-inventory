@@ -5,13 +5,15 @@ import { Invitation } from '@prisma/client';
 interface CreateInvitation {
   invitationCode: InvitationCode;
   expiresAt: Date;
+  volume: number;
 }
 
-export const createInvitation = async ({ invitationCode, expiresAt }: CreateInvitation) =>
+export const createInvitation = async ({ invitationCode, expiresAt, volume }: CreateInvitation) =>
   prismaClient.invitation.create({
     data: {
       code: invitationCode,
-      expiresAt: expiresAt
+      expiresAt,
+      volume
     }
   });
 

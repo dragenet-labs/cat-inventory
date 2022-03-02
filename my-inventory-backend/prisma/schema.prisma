@@ -13,17 +13,18 @@ datasource db {
 model User {
   id             String           @id @default(uuid())
   email          String           @unique @db.VarChar(320)
+  invitation     Invitation?      @relation(fields: [invitationId], references: [id])
+  invitationId   String?
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
-  Invitation     Invitation?
 }
 
 model Invitation {
   id        String               @id @default(uuid())
   code      String               @unique @db.VarChar(512)
   status    InvitationStatus     @default(ACTIVE)
-  user      User?                @relation(fields: [userId], references: [id])
-  userId    String?
+  volume    Int
+  users     User[]
   expiresAt DateTime
   createdAt DateTime             @default(now())
   updatedAt DateTime             @updatedAt
@@ -31,6 +32,6 @@ model Invitation {
 
 enum InvitationStatus {
   ACTIVE
-  USED
+  INACTIVE
   EXPIRED
 }
