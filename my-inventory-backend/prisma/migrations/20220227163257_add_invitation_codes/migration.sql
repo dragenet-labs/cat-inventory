@@ -2,7 +2,7 @@
 CREATE TYPE "InvitationCodeStatus" AS ENUM ('ACTIVE', 'USED', 'EXPIRED');
 
 -- CreateTable
-CREATE TABLE "InvitationCode" (
+CREATE TABLE "Invitation" (
     "id" TEXT NOT NULL,
     "code" VARCHAR(512) NOT NULL,
     "status" "InvitationCodeStatus" NOT NULL DEFAULT E'ACTIVE',
@@ -15,7 +15,7 @@ CREATE TABLE "InvitationCode" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "InvitationCode_code_key" ON "InvitationCode"("code");
+CREATE UNIQUE INDEX "InvitationCode_code_key" ON "Invitation"("code");
 
 -- AddForeignKey
-ALTER TABLE "InvitationCode" ADD CONSTRAINT "InvitationCode_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Invitation" ADD CONSTRAINT "InvitationCode_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;

@@ -6,26 +6,26 @@ export type InvitationCode = z.infer<typeof zodInvitationCode>;
 export const zodInvitationStatus = z.enum(['ACTIVE', 'INACTIVE', 'EXPIRED']);
 export type InvitationStatus = z.infer<typeof zodInvitationStatus>;
 
-export const zodCreateInvitationCodeRequestDTO = z.object({
+export const zodCreateInvitationRequestDTO = z.object({
   expiresIn: z.number(),
   volume: z.number().int().default(1)
 });
-export type CreateInvitationCodeRequestDTO = z.infer<typeof zodCreateInvitationCodeRequestDTO>;
+export type CreateInvitationCodeRequestDTO = z.infer<typeof zodCreateInvitationRequestDTO>;
 
-export const zodInvitationCodeResponseDTO = z.object({
+export const zodInvitationResponseDTO = z.object({
   code: zodInvitationCode,
   status: zodInvitationStatus,
   expiresAt: z.date(),
   createdAt: z.date()
 });
-export type InvitationCodeResponseDTO = z.infer<typeof zodCreateInvitationCodeRequestDTO>;
+export type InvitationCodeResponseDTO = z.infer<typeof zodCreateInvitationRequestDTO>;
 
 export const zodValidateInvitationRequestDTO = z.object({
-  invitationCode: zodInvitationCode
+  code: zodInvitationCode
 });
 export type ValidateInvitationRequestDTO = z.infer<typeof zodValidateInvitationRequestDTO>;
 
 export const zodBurnInvitationRequestDTO = z.object({
-  invitationCode: zodInvitationCode
+  code: zodInvitationCode
 });
 export type BurnInvitationRequestDTO = z.infer<typeof zodValidateInvitationRequestDTO>;

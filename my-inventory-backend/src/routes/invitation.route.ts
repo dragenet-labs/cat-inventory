@@ -1,14 +1,14 @@
 import { Router } from 'express';
 import { InvitationController } from 'src/controllers';
 import { asyncHandler, zodSanitize } from 'src/utils';
+import { HttpInvalidInvitationCode } from 'my-inventory-common/errors';
+import { zodWithBody } from 'src/utils/zod';
+import { ZodError } from 'zod';
 import {
-  zodCreateInvitationCodeRequestDTO,
+  zodBurnInvitationRequestDTO,
+  zodCreateInvitationRequestDTO,
   zodValidateInvitationRequestDTO
 } from 'my-inventory-common/dto';
-import { HttpInvalidInvitationCode } from 'my-inventory-common/errors';
-import { zodWithParams } from 'src/utils/zod';
-import { ZodError } from 'zod';
-import { zodBurnInvitationRequestDTO } from 'my-inventory-common/dist/dto';
 
 export const invitationRoutes = Router();
 
@@ -21,10 +21,10 @@ const handleInvitationValidationError = (error: ZodError) => {
   }
 };
 
-invitationRoutes.get(
-  '/:invitationCode',
+invitationRoutes.post(
+  '/validate',
   asyncHandler(
-    zodSanitize(zodWithParams(zodValidateInvitationRequestDTO), {
+    zodSanitize(zodWithBody(zodValidateInvitationRequestDTO), {
       onError: handleInvitationValidationError
     }),
     InvitationController.validateInvitation
@@ -34,7 +34,7 @@ invitationRoutes.get(
 invitationRoutes.post(
   '/',
   asyncHandler(
-    zodSanitize({ body: zodCreateInvitationCodeRequestDTO }),
+    zodSanitize({ body: zodCreateInvitationRequestDTO }),
     InvitationController.createInvitation
   )
 );

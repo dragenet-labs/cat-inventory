@@ -5,9 +5,10 @@
   "main": "./dist/index.js",
   "scripts": {
     "test": "jest",
+    "clean": "rm -R ./dist",
     "build": "tsc -p ../my-inventory-common/tsconfig.json",
-    "watch": "nodemon",
-    "build-all": "yarn clean && yarn build"
+    "build:clean": "yarn clean && yarn build",
+    "watch": "nodemon"
   },
   "author": "",
   "license": "ISC",

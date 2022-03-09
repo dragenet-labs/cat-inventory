@@ -1,14 +1,14 @@
 /*
   Warnings:
 
-  - You are about to drop the `InvitationCode` table. If the table is not empty, all the data it contains will be lost.
+  - You are about to drop the `Invitation` table. If the table is not empty, all the data it contains will be lost.
 
 */
 -- DropForeignKey
-ALTER TABLE "InvitationCode" DROP CONSTRAINT "InvitationCode_userId_fkey";
+ALTER TABLE "Invitation" DROP CONSTRAINT "InvitationCode_userId_fkey";
 
 -- DropTable
-DROP TABLE "InvitationCode";
+DROP TABLE "Invitation";
 
 -- CreateTable
 CREATE TABLE "Invitation" (
