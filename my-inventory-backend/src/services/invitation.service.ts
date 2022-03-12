@@ -6,7 +6,7 @@ import {
 import { storages } from 'src/storages/prisma-postgres';
 import {
   CreateInvitationData,
-  InvitationDTO,
+  InvitationStorageDTO,
   UpdateInvitationData
 } from 'src/storages/prisma-postgres/invitation.storage';
 import { InvitationCode } from 'my-inventory-common/dto';
@@ -17,7 +17,7 @@ export const createInvitation = (data: Optional<CreateInvitationData, 'status'>)
     ...data
   });
 
-export const burnInvitation = async (invitation: InvitationDTO) => {
+export const burnInvitation = async (invitation: InvitationStorageDTO) => {
   const newVolume = invitation.volume - 1;
   await checkIsInvitationValid(invitation);
   await storages.invitationStorage.updateInvitation(
@@ -29,7 +29,7 @@ export const burnInvitation = async (invitation: InvitationDTO) => {
 export const getInvitationByCode = (code: InvitationCode) =>
   storages.invitationStorage.getInvitation({ code });
 
-export const updateInvitation = async (invitation: InvitationDTO, data: UpdateInvitationData) => {
+export const updateInvitation = async (invitation: InvitationStorageDTO, data: UpdateInvitationData) => {
   const res = await storages.invitationStorage.updateInvitation({ code: invitation.code }, data);
   if (res === null) throw new HttpInvalidInvitationCode();
   await checkIsInvitationValid(res, true);
@@ -42,7 +42,7 @@ type CheckIsInvitationValidReturn =
   | HttpInactiveInvitationCode
   | undefined;
 export const checkIsInvitationValid = async (
-  invitation: InvitationDTO,
+  invitation: InvitationStorageDTO,
   doNotThrow = false
 ): Promise<CheckIsInvitationValidReturn> => {
   try {
@@ -65,8 +65,8 @@ export const checkIsInvitationValid = async (
   }
 };
 
-export const inactivateInvitation = async (invitation: InvitationDTO) =>
+export const inactivateInvitation = async (invitation: InvitationStorageDTO) =>
   updateInvitation(invitation, { status: 'INACTIVE' });
 
-export const expireInvitation = async (invitation: InvitationDTO) =>
+export const expireInvitation = async (invitation: InvitationStorageDTO) =>
   updateInvitation(invitation, { status: 'EXPIRED' });
