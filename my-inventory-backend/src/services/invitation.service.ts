@@ -55,7 +55,7 @@ export const checkIsInvitationValid = async (
       throw new HttpExpiredInvitationCode();
     }
 
-    if (invitation.status === 'INACTIVE') return new HttpInactiveInvitationCode();
+    if (invitation.status === 'INACTIVE') throw new HttpInactiveInvitationCode();
     if (invitation.volume < 1) {
       await inactivateInvitation(invitation);
       throw new HttpInactiveInvitationCode();
