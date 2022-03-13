@@ -4,7 +4,7 @@ declare global {
       PORT: number;
       DATABASE_URL: string;
       INVITATION_CODE_LENGTH: number;
-      PASSWORD_HASH_ROUNDS: number
+      PASSWORD_HASH_ROUNDS: string;
     }
   }
 }

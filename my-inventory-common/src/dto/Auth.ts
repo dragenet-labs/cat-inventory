@@ -12,3 +12,10 @@ export const zodRegisterUserRequestDTO = z.object({
   invitationCode: zodInvitationCode
 });
 export type ZodRegisterUserRequestDTO = z.infer<typeof zodRegisterUserRequestDTO>;
+
+export const zodUserDTO = z.object({
+  id: z.string().uuid(),
+  email: z.string().email({ message: 'Invalid email address' }),
+  invitationId: z.string().uuid(),
+  createdAt: z.date()
+});
