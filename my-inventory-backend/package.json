@@ -14,7 +14,9 @@
     "build": "tsc -p ./tsconfig.json",
     "build-all": "yarn clean && yarn build",
     "kill-port": "yarn node-ts src/scripts/kill-port.ts",
-    "docs": "typedoc --entryPoints src/index.ts"
+    "docs": "typedoc --entryPoints src/index.ts",
+    "migrate": "prisma migrate dev",
+    "migrate:push": "prisma db push"
   },
   "devDependencies": {
     "@types/jest": "^26.0.21",
