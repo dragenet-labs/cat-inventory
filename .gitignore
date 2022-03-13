@@ -5,6 +5,7 @@ dist
 docs
 .idea/*
 .postgres-data
+.env
 
 .DS_Store
 coverage
