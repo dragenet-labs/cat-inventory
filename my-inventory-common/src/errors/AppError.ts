@@ -32,3 +32,9 @@ export class HttpInactiveInvitationCode extends HttpBadRequest {
     super(ErrorTypes.INACTIVE_INVITATION_CODE, 'Your invitation code is inactive now.');
   }
 }
+
+export class HttpUserWithEmailAlreadyExist extends HttpBadRequest {
+  constructor() {
+    super(ErrorTypes.EMAIL_ALREADY_USED, 'User with specified email already exists');
+  }
+}
