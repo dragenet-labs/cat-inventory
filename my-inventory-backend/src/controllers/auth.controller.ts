@@ -6,6 +6,8 @@ import { HttpInvalidInvitationCode } from 'my-inventory-common/errors';
 import { zodUserDTO } from 'my-inventory-common/dto';
 import { storages } from 'src/storages/prisma-postgres';
 import { HttpUserWithEmailAlreadyExist } from 'my-inventory-common/dist/errors';
+import { ZodLoginRequestDTO } from 'my-inventory-common/dto';
+import { Request } from 'express';
 
 export const registerUser = async (data: TypedRequestBody<ZodRegisterUserRequestDTO>) => {
   const { email, password, invitationCode } = data.body;
@@ -25,4 +27,9 @@ export const registerUser = async (data: TypedRequestBody<ZodRegisterUserRequest
   );
 
   return responseOf(parseResponse(createdUser, zodUserDTO));
+};
+
+export const loginUser = async (_data: TypedRequestBody<ZodLoginRequestDTO>, req: Request) => {
+  //TODO: DON'T RETURN RAW USER WITH HASH
+  return responseOf(req.user);
 };

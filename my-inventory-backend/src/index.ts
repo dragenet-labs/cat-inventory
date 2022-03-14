@@ -5,6 +5,8 @@ import bodyParser from 'body-parser';
 import { DefaultErrorMiddleware, ErrorMiddleware } from 'src/middlewares';
 import methodOverride from 'method-override';
 import { appRoutes } from 'src/routes';
+import { configurePassport } from 'src/middlewares/passport';
+import cors from 'cors';
 
 dotenv.config();
 const PORT = process.env.PORT;
@@ -16,13 +18,14 @@ const app = express();
 
 app.use(methodOverride());
 app.use(morgan(defaultMorganLogsFormat));
+app.use(cors());
 app.use(
   bodyParser.urlencoded({
     extended: true
   })
 );
-
 app.use(bodyParser.json());
+configurePassport(app);
 
 app.use(appRoutes);
 

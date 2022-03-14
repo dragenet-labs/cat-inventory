@@ -38,3 +38,9 @@ export class HttpUserWithEmailAlreadyExist extends HttpBadRequest {
     super(ErrorTypes.EMAIL_ALREADY_USED, 'User with specified email already exists');
   }
 }
+
+export class HttpInvalidEmailOrPassword extends HttpBadRequest {
+  constructor() {
+    super(ErrorTypes.INVALID_EMAIL_OR_PASSWORD, 'Email or password is incorrect');
+  }
+}
