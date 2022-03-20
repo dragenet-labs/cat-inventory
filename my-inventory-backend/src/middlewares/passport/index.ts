@@ -1,18 +1,18 @@
 import { Passport } from 'passport';
 import { Express } from 'express';
 import { localStategy } from 'src/middlewares/passport/local';
-import { UserStorageDTO } from 'src/storages/prisma-postgres/user.storage';
 import { storages } from 'src/storages/prisma-postgres';
 import { HttpInternalServerError } from 'my-inventory-common/dist/errors';
 import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 import { prismaClient } from 'src/utils';
 import session from 'express-session';
+import { ZodUserDTO, zodUserDTO } from 'my-inventory-common/dto';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface User extends UserStorageDTO {}
+    interface User extends ZodUserDTO {}
   }
 }
 
@@ -27,14 +27,14 @@ const prismaSessionStorage = new PrismaSessionStore(prismaClient, {
 export const configurePassport = (app: Express) => {
   passport.use(localStategy);
 
-  passport.serializeUser((user: UserStorageDTO, done) => {
+  passport.serializeUser((user: ZodUserDTO, done) => {
     done(null, user.id);
   });
 
   passport.deserializeUser(async (id, done) => {
     const user = await storages.userStorage.getUser({ id: id as string });
     if (user === null) done(new HttpInternalServerError());
-    done(null, user);
+    done(null, zodUserDTO.parse(user));
   });
 
   app.use(
@@ -47,7 +47,7 @@ export const configurePassport = (app: Express) => {
       cookie: {
         secure: process.env.SESSION_SECURE === 'true',
         httpOnly: process.env.SESSION_HTTP_ONLY === 'true',
-        maxAge: parseInt(process.env.SESSION_MAX_AGE)
+        maxAge: parseInt(process.env.SESSION_MAX_AGE) * 1000
       }
     })
   );
