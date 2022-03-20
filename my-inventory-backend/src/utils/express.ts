@@ -27,8 +27,7 @@ export const zodSanitize = <S extends ZodRawShape>(schema: S, options?: ZodSanit
         ...req,
         query: req.query,
         params: req.params,
-        body: req.body,
-        user: req.user
+        body: req.body
       });
     } catch (error) {
       if (error instanceof ZodError) {
