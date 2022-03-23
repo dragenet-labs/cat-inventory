@@ -6,6 +6,7 @@ jobs:
   be-test:
     env:
       NODE_ENV: test
+      DATABASE_URL="postgresql://postgres:postgres@postgres/my-inventory-test"
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
     # Docker Hub image that `container-job` executes in
@@ -48,7 +49,7 @@ jobs:
         run: yarn common build
 
       - name: Migrate db
-        run: yarn be env:ci migrate:push
+        run: yarn be env:test migrate:push
 
       - name: Run tests
-        run: yarn be env:ci test
+        run: yarn be env:test test
