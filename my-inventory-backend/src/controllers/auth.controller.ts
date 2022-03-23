@@ -5,7 +5,7 @@ import { services } from 'src/services';
 import { HttpInvalidInvitationCode } from 'my-inventory-common/errors';
 import { zodUserDTO } from 'my-inventory-common/dto';
 import { storages } from 'src/storages/prisma-postgres';
-import { HttpUserWithEmailAlreadyExist } from 'my-inventory-common/dist/errors';
+import { HttpUserWithEmailAlreadyExist } from 'my-inventory-common/errors';
 import { ZodLoginRequestDTO } from 'my-inventory-common/dto';
 import { Request } from 'express';
 

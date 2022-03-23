@@ -2,7 +2,7 @@ import { Passport } from 'passport';
 import { Express } from 'express';
 import { localStategy } from 'src/middlewares/passport/local';
 import { storages } from 'src/storages/prisma-postgres';
-import { HttpInternalServerError } from 'my-inventory-common/dist/errors';
+import { HttpInternalServerError } from 'my-inventory-common/errors';
 import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 import { prismaClient } from 'src/utils';
 import session from 'express-session';
