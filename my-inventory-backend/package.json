@@ -18,8 +18,8 @@
     "migrate": "prisma migrate dev",
     "migrate:push": "prisma db push",
     "migrate:reset": "prisma migrate reset --force",
-    "env:test": "dotenv -e .env.test -- yarn ",
-    "env:ci": "dotenv -e .env.ci -- yarn "
+    "env:test": "dotenv -e .env.test -- yarn",
+    "env:ci": "dotenv -e .env.ci -- yarn"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
