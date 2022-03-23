@@ -49,7 +49,7 @@ jobs:
         run: yarn common build
 
       - name: Migrate db
-        run: yarn be test:migrate
+        run: yarn be env:ci migrate:push
 
       - name: Run tests
-        run: yarn be test
+        run: yarn be env:ci test
