@@ -6,6 +6,7 @@ jobs:
   be-test:
     env:
       NODE_ENV: test
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5438/my-inventory-test
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
     # Docker Hub image that `container-job` executes in
@@ -43,6 +44,9 @@ jobs:
 
       - name: Build db client
         run: yarn be prisma generate
+
+      - name: Build common
+        run: yarn common build
 
       - name: Migrate db
         run: yarn be test:migrate
