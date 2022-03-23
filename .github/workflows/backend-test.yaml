@@ -3,7 +3,7 @@ on: push
 
 jobs:
   # Label of the container job
-  container-job:
+  be-test:
     env:
       NODE_ENV: test
     # Containers must run in Linux based operating systems
@@ -47,5 +47,5 @@ jobs:
       - name: Migrate db
         run: yarn be test:migrate
 
-      - name: Connect to PostgreSQL
+      - name: Run tests
         run: yarn be test
