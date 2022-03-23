@@ -1,0 +1,35 @@
+import { SuperAgentTest, Request } from 'supertest';
+import { InvitationCode, InvitationResponseDTO } from 'my-inventory-common/dto';
+import { HttpError } from 'my-inventory-common/errors';
+
+export interface RequestWithBody<T> extends Request {
+  body: T | HttpError;
+}
+export type InvitationTest = RequestWithBody<InvitationResponseDTO>;
+
+export const createTestInvitation = async (
+  request: SuperAgentTest,
+  expiresIn: number,
+  volume?: number
+): Promise<InvitationTest> =>
+  await request.post('/invitation').send({
+    expiresIn,
+    volume
+  });
+
+export const validateTestInvitation = async (
+  request: SuperAgentTest,
+  code: InvitationCode
+): Promise<InvitationTest> =>
+  await request.post('/invitation/validate').send({
+    code
+  });
+
+type BurnInvitationResponse = RequestWithBody<Record<string, never>>;
+export const burnTestInvitation = async (
+  request: SuperAgentTest,
+  code: InvitationCode
+): Promise<BurnInvitationResponse> =>
+  await request.post('/invitation/burn').send({
+    code
+  });
