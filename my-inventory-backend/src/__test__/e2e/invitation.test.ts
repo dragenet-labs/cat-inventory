@@ -1,13 +1,13 @@
 import supertest from 'supertest';
 import { SuperAgentTest } from 'supertest';
 import moment from 'moment';
-import { app } from '../app';
-import { prismaClient } from '../utils';
+import { app } from '../../app';
+import { prismaClient } from '../../utils';
 import {
   burnTestInvitation,
   createTestInvitation,
   validateTestInvitation
-} from './utils/invitation';
+} from '../utils/invitation';
 
 const expiresIn = 7;
 
