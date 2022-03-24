@@ -10,24 +10,21 @@ import cors from 'cors';
 const defaultMorganLogsFormat =
   ':status :method :url HTTP/:http-version :remote-addr :res[content-length]B ":user-agent" - :response-time ms';
 
-export const getApp = () => {
-  const app = express();
+export const app = express();
 
-  app.use(methodOverride());
-  if (process.env.NODE_ENV !== 'test') app.use(morgan(defaultMorganLogsFormat));
-  app.use(cors());
-  app.use(
-    bodyParser.urlencoded({
-      extended: true
-    })
-  );
-  app.use(bodyParser.json());
-  configurePassport(app);
+app.use(methodOverride());
+if (process.env.NODE_ENV !== 'test') app.use(morgan(defaultMorganLogsFormat));
+app.use(cors());
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
+app.use(bodyParser.json());
+configurePassport(app);
 
-  app.use(appRoutes);
+app.use(appRoutes);
 
-  app.use(DefaultErrorMiddleware);
-  app.use(ErrorLoggerMiddleware);
-  app.use(ErrorMiddleware);
-  return app;
-};
+app.use(DefaultErrorMiddleware);
+app.use(ErrorLoggerMiddleware);
+app.use(ErrorMiddleware);

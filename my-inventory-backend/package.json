@@ -8,7 +8,8 @@
     "start": "node ./dist/index.js",
     "start:local": "yarn node-ts ./src",
     "start:dev": "nodemon",
-    "test": "jest --forceExit",
+    "pretest": "yarn env:test migrate:reset",
+    "test": "yarn env:test jest --forceExit",
     "test:types": "tsc --noEmit --project .",
     "lint": "eslint src/ --ext .js,.ts",
     "clean": "rm -rf dist",
@@ -19,7 +20,7 @@
     "migrate": "prisma migrate dev",
     "migrate:push": "prisma db push",
     "migrate:reset": "prisma migrate reset --force",
-    "env:test": "dotenv -e .env.test -- yarn"
+    "env:test": "NODE_ENV=test dotenv -e .env.test -- yarn"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
