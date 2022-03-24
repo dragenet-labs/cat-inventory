@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import { SuperAgentTest } from 'supertest';
 import moment from 'moment';
-import { app } from '../../app';
+import { createApp } from '../../app';
 import { prismaClient } from '../../utils';
 import {
   burnTestInvitation,
@@ -15,6 +15,7 @@ describe('[E2E] Invitation', () => {
   let request: SuperAgentTest;
 
   beforeEach(() => {
+    const app = createApp();
     request = supertest.agent(app);
   });
 
@@ -53,14 +54,14 @@ describe('[E2E] Invitation', () => {
   });
 
   it('can be validated', async () => {
-    const invitation = await createTestInvitation(request, expiresIn);
+    const invitation = await createTestInvitation(request);
     const res = await validateTestInvitation(request, invitation.body.code);
     expect(res.statusCode).toEqual(200);
     expect(res.body.status).toEqual('ACTIVE');
   });
 
   it('can be burned', async () => {
-    const invitation = await createTestInvitation(request, expiresIn);
+    const invitation = await createTestInvitation(request);
     const res = await burnTestInvitation(request, invitation.body.code);
     const burnedInvitation = await prismaClient.invitation.findFirst({
       where: { code: invitation.body.code }
@@ -71,7 +72,7 @@ describe('[E2E] Invitation', () => {
   });
 
   it('validate with error when used', async () => {
-    const invitation = await createTestInvitation(request, expiresIn);
+    const invitation = await createTestInvitation(request);
     await burnTestInvitation(request, invitation.body.code);
     const res = await validateTestInvitation(request, invitation.body.code);
     expect(res.statusCode).toEqual(400);
