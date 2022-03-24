@@ -1,12 +1,9 @@
-import path from 'path';
-import dotenv from 'dotenv';
 import { app } from 'src/app';
+import { dotenvConfig } from 'src/utils/dotenvConfig';
 
-const dotenvConfig = {
-  path: process.env.NODE_ENV === 'test' ? path.resolve(process.cwd(), '.env.test') : undefined
-};
-console.log('dotenvConfig', dotenvConfig);
-dotenv.config(dotenvConfig);
+dotenvConfig();
+
+console.log('PASSWORD_HASH_ROUNDS', process.env.PASSWORD_HASH_ROUNDS);
 
 const PORT = process.env.PORT;
 
