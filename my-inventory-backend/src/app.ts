@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
-import { DefaultErrorMiddleware, ErrorMiddleware } from 'src/middlewares';
+import { DefaultErrorMiddleware, ErrorLoggerMiddleware, ErrorMiddleware } from 'src/middlewares';
 import methodOverride from 'method-override';
 import { appRoutes } from 'src/routes';
 import { configurePassport } from 'src/middlewares/passport';
@@ -26,4 +26,5 @@ configurePassport(app);
 app.use(appRoutes);
 
 app.use(DefaultErrorMiddleware);
+app.use(ErrorLoggerMiddleware);
 app.use(ErrorMiddleware);
