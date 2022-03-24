@@ -13,7 +13,7 @@ const defaultMorganLogsFormat =
 export const app = express();
 
 app.use(methodOverride());
-app.use(morgan(defaultMorganLogsFormat));
+if (process.env.NODE_ENV !== 'test') app.use(morgan(defaultMorganLogsFormat));
 app.use(cors());
 app.use(
   bodyParser.urlencoded({

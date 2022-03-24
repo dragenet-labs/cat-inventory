@@ -11,7 +11,7 @@ export const ErrorMiddleware = (
   res: Response,
   next: NextFunction
 ): void => {
-  console.error(err);
+  if (!(err instanceof HttpError)) console.error(err);
   const returnError = err instanceof HttpError ? err : new HttpInternalServerError();
   res.status(returnError.statusCode).json(returnError.toJson());
   next();
