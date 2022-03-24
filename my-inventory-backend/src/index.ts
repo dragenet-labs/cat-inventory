@@ -1,7 +1,6 @@
-import { app } from 'src/app';
-import { dotenvConfig } from 'src/utils/dotenvConfig';
+import { createApp } from 'src/app';
 
-dotenvConfig();
+const app = createApp();
 
 const PORT = process.env.PORT;
 
