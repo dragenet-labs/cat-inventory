@@ -51,5 +51,8 @@ jobs:
       - name: Migrate db
         run: yarn be env:test migrate:push
 
+      - name: Test type
+          run: yarn be test:types
+
       - name: Run tests
         run: yarn be env:test test
