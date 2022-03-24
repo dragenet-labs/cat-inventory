@@ -3,7 +3,7 @@ on: push
 
 jobs:
   # Label of the container job
-  be-test:
+  backend-test:
     env:
       NODE_ENV: test
       DATABASE_URL: "postgresql://postgres:postgres@postgres/my-inventory-test"
@@ -57,4 +57,4 @@ jobs:
         run: yarn be env:test migrate:push
 
       - name: Run tests
-        run: yarn be env:test test
+        run: yarn be ci:test
