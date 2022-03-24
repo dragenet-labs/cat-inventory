@@ -47,8 +47,11 @@ jobs:
       - name: Build common
         run: yarn common build
 
-      - name: Test type
+      - name: Test types
         run: yarn be test:types
+
+      - name: Lint
+        run: yarn be lint
 
       - name: Migrate db
         run: yarn be env:test migrate:push
