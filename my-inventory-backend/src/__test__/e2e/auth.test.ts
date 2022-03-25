@@ -36,6 +36,7 @@ describe('[E2E] Auth', () => {
     const cookies = cookieParser(res.headers['set-cookie']);
     const connectSid = cookies['connect.sid'];
     expect(connectSid).not.toBeUndefined();
+    expect(connectSid).not.toBeFalsy();
 
     const dbUser = await prismaClient.user.findFirst({ where: { email } });
     expect(dbUser).not.toBeNull();
