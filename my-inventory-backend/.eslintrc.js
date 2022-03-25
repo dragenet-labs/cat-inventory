@@ -7,5 +7,8 @@ module.exports = {
       }
     }
   },
-  ignorePatterns: ['*.generated.ts', '__snapshots__/**']
+  ignorePatterns: ['*.generated.ts', '__snapshots__/**'],
+  globals: {
+    module: true
+  }
 };

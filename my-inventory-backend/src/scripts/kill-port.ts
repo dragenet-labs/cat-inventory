@@ -1,11 +1,12 @@
 import kill from 'kill-port';
-import dotenv from 'dotenv';
+import { dotenvConfig } from 'src/utils/dotenvConfig';
 
-dotenv.config();
-// if (!process.env.PORT) {
-//   console.error('PORT undefined');
-//   process.exit(1);
-// }
+dotenvConfig();
+
+if (!process.env.PORT) {
+  console.error('PORT undefined');
+  process.exit(1);
+}
 kill(process.env.PORT || 0).then(() => {
   console.log(`Process on port ${process.env.PORT} killed`);
 });

@@ -18,7 +18,7 @@ export const zodInvitationResponseDTO = z.object({
   expiresAt: z.date(),
   createdAt: z.date()
 });
-export type InvitationCodeResponseDTO = z.infer<typeof zodCreateInvitationRequestDTO>;
+export type InvitationResponseDTO = z.infer<typeof zodCreateInvitationRequestDTO>;
 
 export const zodValidateInvitationRequestDTO = z.object({
   code: zodInvitationCode

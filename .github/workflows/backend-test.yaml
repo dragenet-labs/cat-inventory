@@ -1,0 +1,60 @@
+name: Test Backend
+on: push
+
+jobs:
+  # Label of the container job
+  backend-test:
+    env:
+      NODE_ENV: test
+      DATABASE_URL: "postgresql://postgres:postgres@postgres/my-inventory-test"
+    # Containers must run in Linux based operating systems
+    runs-on: ubuntu-latest
+    # Docker Hub image that `container-job` executes in
+    container: node:16.14-alpine
+
+    # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres:14.1-alpine
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: my-inventory-test
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      # Downloads a copy of the code in your repository before running CI tests
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      # Performs a clean installation of all dependencies in the `package.json` file
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build db client
+        run: yarn be prisma generate
+
+      - name: Build common
+        run: yarn common build
+
+      - name: Test types
+        run: yarn be test:types
+
+      - name: Lint
+        run: yarn be lint
+
+      - name: Migrate db
+        run: yarn be env:test migrate:push
+
+      - name: Run tests
+        run: yarn be ci:test

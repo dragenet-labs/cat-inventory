@@ -20,16 +20,19 @@ export const createInvitation = (data: Optional<CreateInvitationData, 'status'>)
 export const burnInvitation = async (invitation: InvitationStorageDTO) => {
   const newVolume = invitation.volume - 1;
   await checkIsInvitationValid(invitation);
-  await storages.invitationStorage.updateInvitation(
+  return await storages.invitationStorage.updateInvitation(
     { code: invitation.code },
-    { volume: newVolume }
+    { volume: newVolume, status: newVolume < 1 ? 'INACTIVE' : invitation.status }
   );
 };
 
 export const getInvitationByCode = (code: InvitationCode) =>
   storages.invitationStorage.getInvitation({ code });
 
-export const updateInvitation = async (invitation: InvitationStorageDTO, data: UpdateInvitationData) => {
+export const updateInvitation = async (
+  invitation: InvitationStorageDTO,
+  data: UpdateInvitationData
+) => {
   const res = await storages.invitationStorage.updateInvitation({ code: invitation.code }, data);
   if (res === null) throw new HttpInvalidInvitationCode();
   await checkIsInvitationValid(res, true);
@@ -44,7 +47,7 @@ type CheckIsInvitationValidReturn =
 export const checkIsInvitationValid = async (
   invitation: InvitationStorageDTO,
   doNotThrow = false
-): Promise<CheckIsInvitationValidReturn> => {
+): Promise<CheckIsInvitationValidReturn | unknown> => {
   try {
     if (invitation.status === 'EXPIRED') throw new HttpExpiredInvitationCode();
     if (invitation.expiresAt < new Date()) {
@@ -52,7 +55,7 @@ export const checkIsInvitationValid = async (
       throw new HttpExpiredInvitationCode();
     }
 
-    if (invitation.status === 'INACTIVE') return new HttpInactiveInvitationCode();
+    if (invitation.status === 'INACTIVE') throw new HttpInactiveInvitationCode();
     if (invitation.volume < 1) {
       await inactivateInvitation(invitation);
       throw new HttpInactiveInvitationCode();
@@ -61,8 +64,11 @@ export const checkIsInvitationValid = async (
   } catch (e) {
     if (!doNotThrow) {
       throw e;
+    } else {
+      return e;
     }
   }
+  return null;
 };
 
 export const inactivateInvitation = async (invitation: InvitationStorageDTO) =>
