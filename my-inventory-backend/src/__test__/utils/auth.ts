@@ -14,3 +14,9 @@ export const registerTestUser = async (
     password,
     invitationCode: code
   });
+
+export const loginTestUser = async (
+  request: SuperAgentTest,
+  email: string,
+  password: string
+): Promise<RegisterTestUser> => request.post('/auth/login').send({ email, password });
