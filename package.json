@@ -5,9 +5,11 @@
   "description": "",
   "workspaces": [
     "my-inventory-common",
-    "my-inventory-backend"
+    "my-inventory-backend",
+    "cat-inventory-web"
   ],
   "scripts": {
+    "fe": "yarn workspace cat-inventory-web",
     "be": "yarn workspace my-inventory-backend",
     "common": "yarn workspace my-inventory-common",
     "prepare": "husky install"
