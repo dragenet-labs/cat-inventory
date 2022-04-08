@@ -4685,6 +4685,13 @@ jest@^27.5.1:
     import-local "^3.0.2"
     jest-cli "^27.5.1"
 
+jira-prepare-commit-msg@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/jira-prepare-commit-msg/-/jira-prepare-commit-msg-1.6.2.tgz#c8759ef147e10beae91cd4a0f672a6b6370ea0a9"
+  integrity sha512-U9nuFs8JEH4mIkb9Q0jDdbPzC5MDz1mCaD5H5Uq2IPm4gTYutB+i+Ubnp5dIjrtY1URjySK3V/ZHF0EzKcuRTg==
+  dependencies:
+    cosmiconfig "^7.0.1"
+
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
