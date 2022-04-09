@@ -38,14 +38,18 @@ jobs:
         uses: actions/checkout@v2
 
       # Performs a clean installation of all dependencies in the `package.json` file
+
+      - name: Install common deps
+        run: yarn common install
+
+      - name: Build common
+        run: yarn common build
+
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
       - name: Build db client
         run: yarn be prisma generate
-
-      - name: Build common
-        run: yarn common build
 
       - name: Test types
         run: yarn be test:types
