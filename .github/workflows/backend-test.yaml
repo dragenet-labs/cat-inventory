@@ -40,7 +40,7 @@ jobs:
       # Performs a clean installation of all dependencies in the `package.json` file
 
       - name: Install common deps
-        run: yarn common install
+        run: yarn common install --ignore-workspaces
 
       - name: Build common
         run: yarn common build
