@@ -5,7 +5,7 @@ interface Props extends FlexProps {
 }
 
 export const CenteredViewTemplate = ({ children, ...props }: Props) => (
-  <Flex w="100vw" h="100vh" alignItems="center" justifyContent="center" {...props}>
+  <Flex w="100%" minH="100%" alignItems="center" justifyContent="center" py={[0, 6]} {...props}>
     {children}
   </Flex>
 );
