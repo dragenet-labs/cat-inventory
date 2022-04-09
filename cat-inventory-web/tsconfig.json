@@ -26,6 +26,9 @@
     "paths": {
       "src/*": [
         "./src/*"
+      ],
+      "my-inventory-common/*": [
+        "../my-inventory-common/dist/*"
       ]
     }
   },
