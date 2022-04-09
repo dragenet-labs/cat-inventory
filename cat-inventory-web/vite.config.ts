@@ -12,7 +12,7 @@ export default defineConfig({
       { find: 'src', replacement: path.resolve(__dirname, 'src') },
       {
         find: 'my-inventory-common',
-        replacement: path.resolve(__dirname, 'node_modules/my-inventory-common')
+        replacement: path.resolve(__dirname, 'node_modules/my-inventory-common/dist')
       }
     ]
   }

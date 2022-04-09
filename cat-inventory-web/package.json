@@ -6,7 +6,8 @@
     "postinstall": "patch-package",
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "clean": "rimraf ./node_modules && rimraf ./dist"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.8.8",
@@ -14,7 +15,7 @@
     "@emotion/styled": "^11",
     "@hookform/resolvers": "^2.8.8",
     "framer-motion": "^6",
-    "my-inventory-common": "file:../my-inventory-common/dist",
+    "my-inventory-common": "file:../my-inventory-common",
     "patch-package": "^6.4.7",
     "postinstall-postinstall": "^2.1.0",
     "react": "^17.0.2",
@@ -28,6 +29,7 @@
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
     "@vitejs/plugin-react": "^1.0.7",
+    "rimraf": "^3.0.2",
     "typescript": "^4.5.4",
     "vite": "^2.9.0",
     "vite-plugin-svgr": "^1.1.0"

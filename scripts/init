@@ -1,0 +1,8 @@
+#!/usr/bin/env zx
+
+const args = process.argv.filter(arg => arg.startsWith('--') || arg.startsWith('-'))
+
+await $`yarn ${args}`
+await $`yarn common build`
+await $`yarn fe clean`
+await $`yarn ${args}`
