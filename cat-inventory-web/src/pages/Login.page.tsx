@@ -3,7 +3,7 @@ import { LoginRegisterCardTemplate } from 'src/components/templates/LoginRegiste
 import { Heading } from '@chakra-ui/react';
 import { LoginForm } from 'src/components/organisms/LoginForm';
 
-export const LoginPage = () => {
+const LoginPage = () => {
   return (
     <LoginRegisterCardTemplate px={['54px', '64px']}>
       <AppLogo w="120px" mt={['94px', '43px']} mb={6} />
@@ -14,3 +14,5 @@ export const LoginPage = () => {
     </LoginRegisterCardTemplate>
   );
 };
+
+export default LoginPage;
