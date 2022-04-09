@@ -13,7 +13,7 @@
     "ci:test": "yarn env:test jest --forceExit",
     "test:types": "tsc --noEmit --project .",
     "lint": "eslint src/ --ext .js,.ts",
-    "clean": "rm -rf dist",
+    "clean": "rimraf ./dist && rimraf ./node_modules",
     "build": "tsc -p ./tsconfig.json",
     "build-all": "yarn clean && yarn build",
     "kill-port": "yarn node-ts src/scripts/kill-port.ts",
