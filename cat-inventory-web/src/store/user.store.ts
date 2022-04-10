@@ -1,11 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { ZodLoginRequestDTO, ZodUserDTO } from 'my-inventory-common/dto';
 import { HttpErrorDTO } from 'my-inventory-common/errors';
+import { formatApiErrors } from 'src/utils/formatApiErrors';
+import { AppError } from 'src/utils/errors';
 
 export interface UserState {
   data: ZodUserDTO | null;
   isLoading: boolean;
-  error: HttpErrorDTO | null;
+  error: AppError | null;
 }
 
 const initialState: UserState = {
@@ -19,8 +21,8 @@ export const userStore = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(login.pending, (state) => {
-      state.isLoading = true;
+    builder.addCase(login.pending, () => {
+      return { ...initialState, isLoading: true };
     });
     builder.addCase(login.fulfilled, (state, { payload }) => {
       state.isLoading = false;
@@ -28,7 +30,7 @@ export const userStore = createSlice({
     });
     builder.addCase(login.rejected, (state, { payload }) => {
       state.isLoading = false;
-      state.error = payload as HttpErrorDTO;
+      state.error = formatApiErrors(payload as HttpErrorDTO) as AppError;
     });
   }
 });

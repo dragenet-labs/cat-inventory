@@ -1,4 +1,4 @@
-import { formatApiErrors, parseZodErrorToRHFE, pathMap } from './formatApiErrors';
+import { formatApiErrors, parseZodErrorToJson, pathMap } from './formatApiErrors';
 
 describe('formatApiErrors', () => {
   it('pathMap', () => {
@@ -49,7 +49,7 @@ describe('formatApiErrors', () => {
       head: { title: 'Missing title' }
     };
 
-    const parsed = parseZodErrorToRHFE(testErrors);
+    const parsed = parseZodErrorToJson(testErrors);
     expect(parsed).toEqual(expectedParsedErrors);
   });
 

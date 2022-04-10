@@ -10,22 +10,31 @@ import {
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodLoginRequestDTO, zodLoginRequestDTO } from 'my-inventory-common/dto';
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from 'src/store/user.store';
 import { RootState } from 'src/store/index.store';
+import { setFormErrors } from 'src/utils/errors';
+import { getFilteredApiErrorMessage } from 'src/utils/formatApiErrors';
 
 export const LoginForm = (props: FlexProps) => {
   const dispatch = useDispatch();
 
-  const isLoading = useSelector((store: RootState) => store.user.isLoading);
+  const user = useSelector((store: RootState) => store.user);
+
+  const form = useForm<ZodLoginRequestDTO>({
+    resolver: zodResolver(zodLoginRequestDTO)
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<ZodLoginRequestDTO>({
-    resolver: zodResolver(zodLoginRequestDTO)
-  });
+  } = form;
+
+  useEffect(() => {
+    setFormErrors(user.error, form);
+  }, [user.error?.errors]);
 
   const onSubmit = (values: ZodLoginRequestDTO) => {
     console.log('form output: ', values);
@@ -66,10 +75,11 @@ export const LoginForm = (props: FlexProps) => {
         color="white"
         bgColor="teal.300"
         _active={{ bg: 'teal.300' }}
-        isLoading={isLoading}
+        isLoading={user.isLoading}
       >
         Login
       </Button>
+      <div>{getFilteredApiErrorMessage(user.error)}</div>
     </Flex>
   );
 };
