@@ -1,10 +1,8 @@
 import * as path from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import svgrPlugin from 'vite-plugin-svgr';
-import * as dotenv from 'dotenv';
+import dotenv from 'dotenv';
 
 const envFile = process.env.NODE_ENV === 'test' ? '.env.test' : '.env';
 const options = { path: path.resolve(process.cwd(), '../my-inventory-backend', envFile) };
