@@ -7,7 +7,6 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "common:update": "cp -r ../my-inventory-common ./node_modules/my-inventory-common",
     "clean": "rimraf ./dist && rimraf ./node_modules"
   },
   "dependencies": {

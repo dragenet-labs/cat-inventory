@@ -14,7 +14,7 @@
     "be": "yarn workspace my-inventory-backend",
     "common": "yarn workspace my-inventory-common",
     "prepare": "husky install",
-    "common:build": "yarn common build && yarn fe common:update",
+    "common:build": "yarn common build && yarn fe clean && yarn",
     "clean": " yarn fe clean && yarn be clean && yarn common clean && rimraf ./node_modules"
   },
   "author": "",
