@@ -9,19 +9,28 @@ import {
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { zodLoginRequestDTO } from 'my-inventory-common/dto';
+import { ZodLoginRequestDTO, zodLoginRequestDTO } from 'my-inventory-common/dto';
 import { forwardRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from 'src/store/user.store';
+import { RootState } from 'src/store/index.store';
 
 export const LoginForm = (props: FlexProps) => {
+  const dispatch = useDispatch();
+
+  const isLoading = useSelector((store: RootState) => store.user.isLoading);
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting }
-  } = useForm({
+    formState: { errors }
+  } = useForm<ZodLoginRequestDTO>({
     resolver: zodResolver(zodLoginRequestDTO)
   });
 
-  const onSubmit = (values: unknown) => console.log('form output: ', values);
+  const onSubmit = (values: ZodLoginRequestDTO) => {
+    console.log('form output: ', values);
+    dispatch(login(values));
+  };
   return (
     <Flex
       as="form"
@@ -57,7 +66,7 @@ export const LoginForm = (props: FlexProps) => {
         color="white"
         bgColor="teal.300"
         _active={{ bg: 'teal.300' }}
-        isLoading={isSubmitting}
+        isLoading={isLoading}
       >
         Login
       </Button>
