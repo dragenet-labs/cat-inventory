@@ -9,7 +9,7 @@ const options = { path: path.resolve(process.cwd(), '../my-inventory-backend', e
 dotenv.config(options);
 
 export default defineConfig({
-  plugins: [svgrPlugin(), react()],
+  plugins: [svgrPlugin(), react({ fastRefresh: process.env.NODE_ENV !== 'test' })],
   resolve: {
     alias: [
       { find: 'src', replacement: path.resolve(__dirname, 'src') },

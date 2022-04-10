@@ -21,7 +21,11 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "types": [
-      "vite-plugin-svgr/client"
+      "vite-plugin-svgr/client",
+      "vite/client",
+      "jest",
+      "@types/testing-library__jest-dom",
+      "@types/react"
     ],
     "paths": {
       "src/*": [
@@ -32,6 +36,13 @@
       ]
     }
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": [
+    "src"
+  ],
+  "exclude": ["**/*.test.ts"],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }
