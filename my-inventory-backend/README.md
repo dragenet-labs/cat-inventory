@@ -30,11 +30,11 @@ __CAUTION__ !!
 
 After each common update you need to run this command 
 ```bash 
-    yarn common:build
+yarn common:build
 ```
 or
 ```bash 
-    yarn common build
-    yarn fe clean
-    yarn
+yarn common build
+yarn fe clean
+yarn
 ```
