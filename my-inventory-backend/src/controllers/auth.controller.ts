@@ -31,5 +31,5 @@ export const registerUser = async (data: TypedRequestBody<ZodRegisterUserRequest
 
 export const loginUser = async (_data: TypedRequestBody<ZodLoginRequestDTO>, req: Request) => {
   //TODO: DON'T RETURN RAW USER WITH HASH
-  return responseOf(req.user);
+  return responseOf(parseResponse(req.user, zodUserDTO));
 };

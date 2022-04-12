@@ -5,18 +5,26 @@
   "description": "",
   "workspaces": [
     "my-inventory-common",
-    "my-inventory-backend"
+    "my-inventory-backend",
+    "cat-inventory-web"
   ],
   "scripts": {
+    "bootstrap": "zx ./scripts/init",
+    "fe": "yarn workspace cat-inventory-web",
     "be": "yarn workspace my-inventory-backend",
     "common": "yarn workspace my-inventory-common",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "common:build": "yarn common build && yarn fe clean && yarn",
+    "clean": " yarn fe clean && yarn be clean && yarn common clean && rimraf ./node_modules"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "eslint-plugin-import": "^2.25.4",
     "husky": "^7.0.0",
-    "prettier": "^2.5.1"
+    "jira-prepare-commit-msg": "^1.6.2",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2",
+    "zx": "^6.0.7"
   }
 }
